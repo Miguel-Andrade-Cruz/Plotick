@@ -346,7 +346,7 @@ function Quadriculado()
     stroke(200);    
     
     for (let linha = 0; linha != TELA;
-         linha += proporcao){
+    linha += proporcao){
             
             //Linhas horizontais
             line(0, linha, TELA, linha);
