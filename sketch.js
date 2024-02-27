@@ -1,12 +1,8 @@
 /*
 Bem vindo ao Plotick, um programa feito para
 visualizar funções de forma didática e simples.
-Basta alterar os valores dos coeficientes,
-ativar as linhas que deseja ver e clicar no botão de run logo acima.
-Caso esteja interessado e saiba programar em Javascript,
-sinta-se livre para alterar e adicionar novas funções na aplicação.
-O código é baseado em POO para faciltar o manuseio e extensão do código
-com o mínimo de erros.
+Basta alterar os valores dos coeficientes, ativar as linhas que deseja ver e clicar no botão de run logo acima.
+Caso esteja interessado e saiba programar em Javascript, sinta-se livre para alterar e adicionar novas funções na aplicação. Todo o código é baseado em POO para faciltar o manuseio e extensão do código com o mínimo de erros.
 
 
 Feito por: Miguel A. da  Cruz, da Minuz code.
@@ -250,7 +246,7 @@ class Exponencial extends Funcao
 // ==============================================================
 // FUNÇÃO DO TERCEIRO GRAU
 // ==============================================================
-class Grau3 extends Funcao
+class TerceiroGrau extends Funcao
 {
   
   constructor(X_inicial, X_final, resolucao, cor, coef_A)
