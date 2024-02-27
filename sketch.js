@@ -1,12 +1,39 @@
+/*
+Bem vindo ao Plotick, um programa feito para
+visualizar funções de forma didática e simples.
+Basta alterar os valores dos coeficientes,
+ativar as linhas que deseja ver e clicar no botão de run logo acima.
+Caso esteja interessado e saiba programar em Javascript,
+sinta-se livre para alterar e adicionar novas funções na aplicação.
+O código é baseado em POO para faciltar o manuseio e extensão do código
+com o mínimo de erros.
+
+
+Feito por: Miguel A. da  Cruz, da Minuz code.
+*/
+
+
+// ====================================================
+// UTILIZAÇÃO
+// =====================================================
+let ativar_azul = 1;
+let coeficientes_azul = {"A": 2, "B": 3};
+
+
+let ativar_vermelha = 1;
+let coeficientes_vermelha = {"A": 1, "B": 1, "C": -6};
+
+
+
+
 // ======================================================
 // CONFIGURAÇÕES
 // ======================================================
-const resolucao_reta = 0.5;
-const resolucao_parabola = 0.5;
-const TELA = 600;
+const TELA = 400;
 const quantidade_quadrados = 20;
 const proporcao = TELA / quantidade_quadrados;
-
+const resolucao_reta = 0.05;
+const resolucao_parabola = 0.015;
 // -----------------------------------------------------
 // ----------------------------------------------------
 
@@ -50,22 +77,19 @@ class Funcao
   plotar()
   {
     stroke(this.cor);
-    strokeWeight(2);
+    strokeWeight(3);
     
     
     for(let ponto = this.X_inicial; ponto < this.X_final; ponto += this.resolucao){
       
       let X = ponto;
-      let Y = -1* this.calcular(X);
+      let Y = -1* this.calcular(X); //Correção do plano padrão do p5.js
       
-      if(X + ORIGEM_X > TELA || X + ORIGEM_X < 0)
-      { continue; }
-
+      // OTIMIZAÇÃO: Caso passar da tela, não desenhar.
+      if(X + ORIGEM_X > TELA || X + ORIGEM_X < 0) { continue; }
+      if(Y + ORIGEM_Y > TELA || Y + ORIGEM_Y < 0) { continue; }      
       
-      if(Y + ORIGEM_Y > TELA || Y + ORIGEM_Y < 0)
-      { continue; }      
-      
-      point(X + ORIGEM_X, Y + ORIGEM_Y);
+      point((X *proporcao) + ORIGEM_X, (Y *proporcao) + ORIGEM_Y);
     } 
   }
   
@@ -91,7 +115,7 @@ class PrimeiroGrau extends Funcao
   calcular(valor_de_X)
   {
    let  valor_de_Y = this.coef_A * valor_de_X + this.coef_B;
-    return valor_de_Y; // Correção do plano cartesiano padrão do p5.js 
+    return valor_de_Y; 
   }
   
 }
@@ -116,9 +140,9 @@ class SegundoGrau extends Funcao
   
   calcular(valor_de_X)
   {
-    let  valor_de_Y = 
-    this.coef_A * (valor_de_X **2) + this.coef_B * valor_de_X + this.coef_C;
-    return valor_de_Y; // Correção do plano cartesiano padrão do p5.js 
+   let  valor_de_Y = 
+   this.coef_A * (valor_de_X **2) + this.coef_B * valor_de_X + this.coef_C;
+    return valor_de_Y;
   }
   
 }
@@ -128,9 +152,9 @@ class SegundoGrau extends Funcao
 
 
 
-// =============================================================
+// ==============================================================
 // FUNÇÃO SENOIDAL
-// =============================================================
+// ==============================================================
 class Senoidal extends Funcao
 {
   constructor(X_inicial, X_final, resolucao, cor)
@@ -140,12 +164,112 @@ class Senoidal extends Funcao
   
   calcular(valor_de_X)
   {
-    let valor_de_Y = sin(valor_de_X * 0.1);
+    let valor_de_Y = sin(valor_de_X);
     return valor_de_Y;
   }
 }
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+
+
+
+
+// ==============================================================
+// FUNÇÃO COSSENOIDAL
+// ==============================================================
+class Cossenoidal extends Funcao
+{
+
+  constructor(X_inicial, X_final, resolucao, cor)
+  {
+    super(X_inicial, X_final, resolucao, cor);
+  }
+
+  calcular(valor_de_X)
+  {
+    let valor_de_Y = cos(valor_de_X);
+    return valor_de_Y;
+  }
+  
+}
+// -------------------------------------------------------------
+// -------------------------------------------------------------
+
+
+
+
+// ==============================================================
+// FUNÇÃO TANGENCIAL
+// ==============================================================
+class Tangencial extends Funcao
+{
+
+  constructor(X_inicial, X_final, resolucao, cor)
+  {
+    super(X_inicial, X_final, resolucao, cor);
+  }
+
+  calcular(valor_de_X)
+  {
+    let valor_de_Y = tan(valor_de_X);
+    return valor_de_Y;
+  }  
+  
+}
 // --------------------------------------------------------------
 // --------------------------------------------------------------
+
+
+
+
+// ==============================================================
+// FUNÇÃO EXPONENCIAL
+// ==============================================================
+class Exponencial extends Funcao
+{
+  
+  constructor(X_inicial, X_final, resolucao, cor, coef_A)
+  {
+    super(X_inicial, X_final, resolucao, cor);
+    this.coef_A = coef_A;
+  }
+  
+  calcular(valor_de_X)
+  {
+    let valor_de_Y = this.coef_A **valor_de_X;
+    return valor_de_Y;
+  }
+  
+}
+// --------------------------------------------------------------
+// --------------------------------------------------------------
+
+
+
+
+// ==============================================================
+// FUNÇÃO DO TERCEIRO GRAU
+// ==============================================================
+class Grau3 extends Funcao
+{
+  
+  constructor(X_inicial, X_final, resolucao, cor, coef_A)
+  {
+    super(X_inicial, X_final, resolucao, cor);
+    this.coef_A = coef_A;
+  }
+  
+  calcular(valor_de_X)
+  {
+    let valor_de_Y = valor_de_X **3;
+    return valor_de_Y;
+  }
+  
+}
+// --------------------------------------------------------------
+// --------------------------------------------------------------
+
+
 
 
 
@@ -158,8 +282,8 @@ const linha_azul = new PrimeiroGrau(
   X_final = X_FINAL,
   resolucao = resolucao_reta,
   cor = "blue",
-  coef_A = 2,
-  coef_B = 2
+  coef_A = coeficientes_azul["A"],
+  coef_B = coeficientes_azul["B"]
 );
 
 
@@ -168,18 +292,50 @@ const linha_vermelha = new SegundoGrau(
   X_final = X_FINAL,
   resolucao = resolucao_parabola,
   cor = "red",
-  coef_A = -3,
-  coef_B = 2,
-  coef_C = 1
+  coef_A = coeficientes_vermelha["A"],
+  coef_B = coeficientes_vermelha["B"],
+  coef_C = coeficientes_vermelha["C"]
 );
-
 
 
 const senoide = new Senoidal(
   X_inicial = X_INICIAL,
   X_final = X_FINAL,
-  resolucao = 0.5,
+  resolucao = 0.09,
   cor = "orange"
+);
+
+
+const cossenoide = new Cossenoidal(
+  X_inicial = X_INICIAL,
+  X_final = X_FINAL,
+  resolucao = 0.09,
+  cor = "lightblue"
+);
+
+
+const tangente = new Tangencial(
+  X_inicial = X_INICIAL,
+  X_final = X_FINAL,
+  resolucao = 0.09,
+  cor = "lightgreen"
+);
+
+
+const expoente = new Exponencial(
+  X_inicial = X_INICIAL,
+  X_final = X_FINAL,
+  resolucao = 0.05,
+  cor = "darkblue",
+  coef_A = 2
+);
+
+
+const grau3 = new Grau3(
+  X_inicial = X_INICIAL,
+  X_final = X_FINAL,
+  resolucao = 0.01,
+  cor = "magenta"
 );
 // --------------------------------------------------------------
 // --------------------------------------------------------------
@@ -193,14 +349,15 @@ function Quadriculado()
     strokeWeight(1);
     stroke(200);    
     
-    for (let linha = 0; linha != TELA; linha += proporcao){
-    
-      //Linhas horizontais
-      line(0, linha, TELA, linha);
+    for (let linha = 0; linha != TELA;
+         linha += proporcao){
+            
+            //Linhas horizontais
+            line(0, linha, TELA, linha);
 
-    
-      //Linhas vericais
-      line(linha, 0, linha, TELA);
+            
+            //Linhas vericais
+            line(linha, 0, linha, TELA);
     }
   
     stroke(0);
@@ -217,19 +374,29 @@ function Quadriculado()
 
 
 
-function setup() {
+function setup()
+{
   createCanvas(TELA, TELA);
 }
 
-function draw() {
+
+
+function draw()
+{
   background(255);
   if(TELA % quantidade_quadrados !== 0){
     text(msg_proporcao_errada, 20, 20);
     return;
   }
+  
   Quadriculado();
-  linha_azul.plotar();
-  linha_vermelha.plotar();
-  senoide.plotar();
-
+  
+  
+  if(ativar_azul){
+    linha_azul.plotar();
+  }
+  
+  if(ativar_vermelha){
+    linha_vermelha.plotar();
+  }
 }
