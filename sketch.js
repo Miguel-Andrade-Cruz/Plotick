@@ -23,14 +23,14 @@ let F_verde = new PrimeiroGrau(0.02, 'green',
 
 
 let F_azul = new SegundoGrau(0.02, 'blue',
-  {'A': 2,'B': 3, 'C': 4 },
+  {'A': 2,'B': 3, 'C': 0 },
   0, 0
 );
 
 
 let F_roxa = new MinhaFuncao(0.2, 'purple',
   {'A': 2,'B': 3 },
-  -480, -480
+  20, 20
 );
 
 
@@ -39,6 +39,17 @@ let F_vermelha = new Logaritimica(0.05, 'red',
   480, -480
 );
 
+
+let F_laranja = new Cruzado(0.05, 'orange',
+  {'A': 3},
+  20, 100
+);
+
+
+let F_azul_escuro = new ZigZag(0.05, 'darkblue',
+  {'A': 3},
+  20, 100
+);
 
 // Coloque as funções na lista abaixo, como no exemplo
 // =========================================
@@ -54,6 +65,14 @@ LISTA_DE_FUNCOES = [
 
 function setup()
 {
+  noLoop();
+  
+  if ( TELA % QUANTIDADE_QUADRADOS !== 0 ) {
+    
+    text(MSG_PROPORCAO_INCORRETA, 20, 20);
+    return;
+  }
+  
   createCanvas(TELA, TELA);  
   frameRate(24);
     
@@ -70,28 +89,28 @@ function setup()
 
 function draw()
 {
-  if(TELA % QUANTIDADE_QUADRADOS !== 0){
-    text(MSG_PROPORCAO_INCORRETA, 20, 20);
-    return;
-  }
+
 
   background(255);
   
   quadriculado();
-  
-  
+      
+      
+      
+      
   for ( let funcaoIndice in LISTA_DE_FUNCOES ) {
-    funcao = LISTA_DE_FUNCOES[funcaoIndice];
+    
+    let funcao = LISTA_DE_FUNCOES[funcaoIndice];
+    for ( let sliderIndice in funcao.sliders ) {
+      
+      let slider = funcao.sliders[sliderIndice];
+      slider.mousePressed(loop);
+      slider.mouseReleased(noLoop); 
+    }
     
     funcao.nomearSliders();    
     
-    push();
-    translate(TELA/2, TELA/2);
-    
     funcao.plotar();
-    
-    pop();
-
   }
 
 }   // ========================================================
