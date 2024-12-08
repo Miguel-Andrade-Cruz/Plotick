@@ -5,54 +5,66 @@ Siga as intruções abaixo para utilizá-lo e melhorá-lo.
 ## Declare funções existentes
 Para declarar uma nova função, basta instanciar a mesma com as propriedades necessárias, no seguinte formato:
 ```
-funcao = new Funcao(resolucao, cor, coeficientes, posicaoSliderX, posicaoSliderY);
-
-primeirograu = new PrimeiroGrau(0.02, 'green', {'A': 1, 'B': 3}, 20, 480);
+funcao = new Funcao(resolucao, cor, coeficientes, posicaoSliderX, posicaoSliderY, equacao);
+```
+```
+primeiro_grau = new Funcao(0.02, 'green', {'A': 1, 'B': 3}, 20, 480, PRIMEIRO_GRAU);
 ```
 Segue abaixo uma tabela de funções que já existem dentro do Plotick:
 | Nome da função | Equação |
 |--|--|
-| `PrimeroGrau` | ax + b |
-| `SegundoGrau`| ax² + bx + c |
-| `ZigZag` | x * x² + a |
-| `Logaritimica` | log(x) + a |
-| `Cruzado` | 1 / x * a |
-| `MInhaFuncao` | sin(x) * aᵇ + tan(x) |
+| `PRIMEIRO_GRAU` | ax + b |
+| `SEGUNDO_GRAU`| ax² + bx + c |
+| `ZIG_ZAG` | x * x² + a |
+| `LOGARITIMICA` | log(x) + a |
+| `CRUZADO` | 1 / x * a |
 
-> Apenas lembrando que a `sin()` refere-se ao seno, só que em inglês.
+> Apenas lembrando que `sin()` refere-se ao seno, só que em inglês.
 
 ## Crie funções novas
 
-O processo de criar uma nova função é um pouco mais longo mas nada muito complicado. Siga os seguites passos:
-1. Crie um arquivo com o nome da função juntamente ao sufixo `.js` na pasta 'Funcoes';
-2. Dentro do arquivo `index.html`, cole a seguinte linha `<script src="./Funcoes/<<Cruzado>>.js"></script>`,debaixo das outras funções já declaradas, onde o texto entre '<<>>' deve ser mudado para o nome de sua função.
-3. dentro da classe de sua nova função extendida de `AbstracaoFuncao`, declare o constutor chamando o método contrutor pai `super()` e declare a função `plotar(X)`, que deve retornar o valor de Y, de acordo com as regras da sua função; 
+O processo de criar uma nova função é agora é simples. Siga os seguites passos:
+1. Entre no arquivo `Equacoes.js` dentro da pasta `Funcoes`;
+2. Crie uma constante como uma equação que recebe o valor de X e objeto da funcão em si;
+3. Declare uma variável 'Y' com a fórmula que quiser, adicionando os coeficientes que serão passados
+4. Retorne a variável Y.
 
 
-> Caso não saiba do que se trata, observer o exemplo abaixo para compreender melhor:
+> Caso não saiba do que se trata, observe o exemplo abaixo para compreender melhor:
 ```
-class FuncaoNova extends FuncaoAbstracao
-{
-    constructor(resolucao, cor, coefs, posicaoSliderX, posicaoSliderY)
-    {
-        super(resolucao, cor, coefs, posicaoSliderX, posicaoSliderY);
-    }
+\\ Dentro do arquivo Equacoes.js
 
+const MINHA_EQUACAO = (X, funcao) => {
 
-    plotar(X)
-    {
-        let Y = this.sliders.F;value() + 23 * X * this.sliders.C.value();
-
-        return Y;
-    }
+    let Y = X * funcao.sliders.A.value();
+    return Y;
 }
 ```
 
-> É importante ressaltar que o nome que voce coloca ao coeficiente aqui deve ser o mesmo para
-> referenciar ao chamar na declaração da função como mostrado acima. Caso contrário, você acabará com um erro.
+> Nota: Siga alguns padrões quando for declarar a sua nova equação, como:
+> - Nome da função em caizxa alta;
+> - Nome do objeto da função como `funcao`;
+> - Criar a variável e depois retorná-la.
 
+
+Como é possível ver no código exemplo, é necessário utilizar alguns prefixos e sufixos para conseguir extrairo valor do coeficiente.
+Então para não restar dúvidas, o formato sempre será `funcao.sliders.<<coef>>.value()`, onde o texto dentor de "<<>>" será o nome do coeficiente.
+
+
+Depois de criar sua nova equação, basta utilizá-la instanciando um objeto da classe função e passando como último parâmetro da função que você acabou de criar:
+```
+let minha_nova_funcao = new Funcao(0.02, 'blue', {'A' : 12}, 200, 400, MINHA_EQUACAO);
+```
+E em seguida, adicioná-la a variável `LISTA_DE_FUNCOES`:
+```
+LISTA_DE_FUNCOES = [
+    funcao_verde,
+    funcao_azul,
+    minha_nova_funcao
+];
+```
 
 ## Veja o resultado
 
 Após os passos acima, clique no botão rosa de play no canto superior esquerdo e veja o resultaodo da sua obra prima! Além disso
-você também pode mexer nos sliders criados para alterar os coeficientes e ver em tempo real as mudanaças.
+você também pode mexer nos sliders criados para alterar os coeficientes e ver em tempo real as mudanças.
