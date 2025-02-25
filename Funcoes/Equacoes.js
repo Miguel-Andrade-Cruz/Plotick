@@ -1,6 +1,6 @@
 const PRIMEIRO_GRAU = (X, funcao) => {
   
-  let Y = funcao.sliders.A.value() * X + funcao.sliders.B.value() ; 
+  let Y = funcao.valorCoef('A') * X + funcao.valorCoef('B') ; 
   return Y;
 };
 
@@ -8,11 +8,7 @@ const PRIMEIRO_GRAU = (X, funcao) => {
 
 const SEGUNDO_GRAU = (X, funcao) => {
   
-  let Y = 
-    funcao.sliders.A.value() * X **2  +
-    funcao.sliders.B.value() * X      + 
-    funcao.sliders.C.value()
-  ;
+  let Y = funcao.valorCoef('A') * X **2 + funcao.valorCoef('B') * X + funcao.valorCoef('C') ;
   return Y;
 };
 
@@ -20,7 +16,7 @@ const SEGUNDO_GRAU = (X, funcao) => {
 
 const ZIG_ZAG = (X, funcao) => {
    
-  let Y = X * X **2 * funcao.sliders.A.value() ;
+  let Y = X * X **2 * funcao.valorCoef('A') ;
   return Y;
 };
 
@@ -28,7 +24,7 @@ const ZIG_ZAG = (X, funcao) => {
 
 const CRUZADO = (X, funcao) => {
 
-  let Y = 1/X + funcao.sliders.A.value() ;
+  let Y = 1/X + funcao.valorCoef('A') ;
   return Y;
 };
 
@@ -36,7 +32,14 @@ const CRUZADO = (X, funcao) => {
 
 const LOGARITIMICA = (X, funcao) => {
 
-  let Y = log(X) + funcao.sliders.A.value() ;
+  let Y = log(X) + funcao.valorCoef('A') ;
+  return Y;
+};
+
+
+const SENOIDAL = (X, funcao) => {
+  
+  let Y = sin(X);
   return Y;
 };
 

@@ -2,7 +2,7 @@
 // Configurações
 // ============================================================
 
-const TELA = 600;
+const TELA = 500;
 const QUANTIDADE_QUADRADOS = 20;
 const PROPORCAO = TELA / QUANTIDADE_QUADRADOS;
 // ============================================================

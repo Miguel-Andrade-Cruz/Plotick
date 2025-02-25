@@ -4,23 +4,20 @@ class Funcao
     resolucao,
     cor,
     coefs,
-    posicaoSliderX,
-    posicaoSliderY,
+    posicao_input_y,
     equacao
   ) {
     
-    this.Y = 0;
+    this.y = 0;
     
     this.cor = cor;
     this.resolucao = resolucao;
     
     this.coefs = coefs;
     
-    this.sliders = [];
-    this.posicaoSliderX = posicaoSliderX;
-    this.posicaoSliderY = posicaoSliderY;
-      
-      
+    this.inputs = [];
+    this.posicao_input_y = posicao_input_y;
+    
     this.atribuiEquacao(equacao);
   }
 
@@ -28,68 +25,74 @@ class Funcao
   atribuiEquacao(equacao)
   {
   
-    this.calcula_Y = equacao;
+    this.calcula_y = equacao;
   }
   
   
-  nomeiaSliders()
+  valorCoef(coef)
   {
-    
-    let posicaoSliderY = this.posicaoSliderY;
-    for ( let nomeCoef in this.coefs ) {
+    let valor_coef = this.inputs[coef].value()
+
+    return Number(valor_coef);
+  }
+  
+  
+  nomeiaInputs()
+  {
+    let posicao_input_y = this.posicao_input_y;
+    for ( let nome_coef in this.coefs ) {
       
-      textSize(14);
-      textStyle(NORMAL);
+      textSize(16);
+      textStyle(BOLD);
       strokeWeight(0.5);
-      text(nomeCoef, this.posicaoSliderX +130, posicaoSliderY +13);
+      text(nome_coef, TELA -15, posicao_input_y +16);
       
-      posicaoSliderY += 15;
+      posicao_input_y += 30;
     } 
   }
   
   
-  criaSliders()
+  criaInputs()
   {
-        
-    let posicaoSliderY = this.posicaoSliderY;
+    let posicao_input_y = this.posicao_input_y;
     for ( let coef in this.coefs ) {
       
-      let valorPadrao = this.coefs[coef];
-      let coefSlider = createSlider(-PROPORCAO, PROPORCAO, valorPadrao, 0.1);
+      let valor_padrao = this.coefs[coef];
+      let coef_input = createInput(`${valor_padrao}`);
       
-      coefSlider.position(this.posicaoSliderX, posicaoSliderY);
-      coefSlider.size(120);
+      coef_input.position(TELA + 5, posicao_input_y);
+      coef_input.size(120);
       
-      this.sliders[coef] = coefSlider;
+      this.inputs[coef] = coef_input;
 
-      posicaoSliderY += 15;
+      posicao_input_y += 30;
     }
   }
   
+
+  
   
 
-  plota(posicaoX, posicaoY)
+  plota()
   {
-    
     stroke(this.cor);
     strokeWeight(3);
     
     push();
     translate(TELA/2, TELA/2);
-    for( let pontoX = INICIO_TELA; pontoX < FIM_TELA; pontoX += this.resolucao ) {
+    for( let ponto_x = INICIO_TELA; ponto_x < FIM_TELA; ponto_x += this.resolucao ) {
       
-      this.X = pontoX;
+      this.x = ponto_x;
       try {
-        this.Y = this.calcula_Y(pontoX, this) * CORRECAO_DE_PLANO;
+        this.y = this.calcula_y(ponto_x, this) * CORRECAO_DE_PLANO;
       } catch (err) {
         return false;
       }
       point(
-        (this.X *PROPORCAO),
-        (this.Y *PROPORCAO)
+        (this.x *PROPORCAO),
+        (this.y *PROPORCAO)
       ); 
     }
     pop();
   }
-  
 }

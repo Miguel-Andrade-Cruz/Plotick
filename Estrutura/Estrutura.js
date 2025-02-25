@@ -1,4 +1,4 @@
-function quadriculado()
+function Quadriculado()
 {
     push();
     translate(TELA / 2, TELA / 2);
