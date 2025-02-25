@@ -1,13 +1,15 @@
 # Bem vindo ao Plotick!
+[Link para o projeto online](https://editor.p5js.org/Minuz_code/sketches/7xSL_oa1E)
+
 Este é o reopsitório do Plotick, um programa de visualização gráfica de funções.
 Siga as intruções abaixo para utilizá-lo e melhorá-lo.
 
 ## Declare funções existentes
 Para declarar uma nova função, basta instanciar a mesma com as propriedades necessárias, no seguinte formato:
 ```
-funcao = new Funcao(resolucao, cor, coeficientes, posicaoSliderX, posicaoSliderY, equacao);
-```
-```
+\\ Arquivo Funcoes.js
+
+funcao = new Funcao(resolucao, cor, coeficientes, posicao_input_y, equacao);
 primeiro_grau = new Funcao(0.02, 'green', {'A': 1, 'B': 3}, 20, 480, PRIMEIRO_GRAU);
 ```
 Segue abaixo uma tabela de funções que já existem dentro do Plotick:
@@ -32,11 +34,11 @@ O processo de criar uma nova função é agora é simples. Siga os seguites pass
 
 > Caso não saiba do que se trata, observe o exemplo abaixo para compreender melhor:
 ```
-\\ Dentro do arquivo Equacoes.js
+\\ Arquivo Equacoes.js
 
 const MINHA_EQUACAO = (X, funcao) => {
 
-    let Y = X * funcao.sliders.A.value();
+    let Y = X * funcao.valorCoef('A');
     return Y;
 }
 ```
@@ -47,16 +49,18 @@ const MINHA_EQUACAO = (X, funcao) => {
 > - Criar a variável e depois retorná-la.
 
 
-Como é possível ver no código exemplo, é necessário utilizar alguns prefixos e sufixos para conseguir extrairo valor do coeficiente.
-Então para não restar dúvidas, o formato sempre será `funcao.sliders.<<coef>>.value()`, onde o texto dentor de "<<>>" será o nome do coeficiente.
+Para utilizar o valor do do coeficiente específico, basta chamaro método `valorCoef` do objeto `funcao`. Isso basta para recuperar o valor do coeficiente.
 
-
-Depois de criar sua nova equação, basta utilizá-la instanciando um objeto da classe função e passando como último parâmetro da função que você acabou de criar:
+Depois de criar sua nova equação, basta utilizá-la instanciando um objeto da classe `Funcao` e passando como último parâmetro da função que você acabou de criar:
 ```
-let minha_nova_funcao = new Funcao(0.02, 'blue', {'A' : 12}, 200, 400, MINHA_EQUACAO);
+\\ Arquivo Funcoes.js
+
+let minha_nova_funcao = new Funcao(0.02, 'blue', {'A' : 12}, 200, MINHA_EQUACAO);
 ```
 E em seguida, adicioná-la a variável `LISTA_DE_FUNCOES`:
 ```
+\\ Arquivo Funcoes.js
+
 LISTA_DE_FUNCOES = [
     funcao_verde,
     funcao_azul,
